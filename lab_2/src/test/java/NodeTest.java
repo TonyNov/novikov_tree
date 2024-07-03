@@ -17,6 +17,19 @@ public class NodeTest {
    }
 
    @Test
+   void toStringAllSpec() {
+      Node root = new Node("root");
+      Node firstChild = root.addChild("1");
+      Node secondChild = root.addChild("2");
+      Node node1 = firstChild.addChild("1.1");
+      Node node2 = firstChild.addChild("1.2");
+      Node node3 = secondChild.addChild("2.1");
+      String s = root.toStringAll();
+      String testString = "root\n\t1\n\t\t1.1\n\t\t1.2\n\t2\n\t\t2.1\n";
+      assertEquals(testString, s);
+   }
+
+   @Test
    void addChildSpec() {
       Node root = new Node("root");
       Node node1 = root.addChild("node1");

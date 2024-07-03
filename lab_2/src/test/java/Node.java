@@ -20,6 +20,20 @@ public class Node {
       return childList;
    }
 
+   public String toStringAll() {
+      return name + "\n" + toStringAll(1);
+   }
+
+   private String toStringAll(int step) {
+      String allInfo = "";
+      for (Node node : childs) {
+         for (int i = 0; i < step; i++)
+            allInfo += '\t';
+         allInfo += node.name + "\n" + node.toStringAll(step + 1);
+      }
+      return allInfo;
+   }
+
    public void setName(String name) {
       this.name = name;
    }
@@ -51,7 +65,7 @@ public class Node {
       int i = 0;
       while (i < childs.size() && name != childs.get(i).name)
          i++;
-      if (i < childs.size())
+      if (i >= childs.size())
          return false;
       childs.remove(i);
       return true;
