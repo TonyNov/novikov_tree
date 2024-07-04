@@ -1,3 +1,40 @@
-lab_2/target/classes/Node.class
-lab_2/target/test-classes/Node.class
-lab_2/target/test-classes/NodeTest.class
+# Бинарные файлы
+*.class
+
+# Локальные настройки
+.settings/
+.idea/
+
+# Временные файлы
+*.tmp
+*.swp
+*.bak
+
+# Игнорирование папки .m2, которая содержит Maven репозиторий
+.m2/
+
+# Игнорирование папки .gradle, которая содержит Gradle репозиторий
+.gradle/
+
+# Игнорирование папки target, которая используется Maven или Gradle для хранения артефактов сборки
+target/
+
+# Игнорирование выходных файлов IDE
+out/
+build/
+dist/
+
+# Игнорирование IDE
+.vscode/
+*.iml
+*.ipr
+*.iws
+*.vcxproj
+*.vcpkg.cmake
+*.vcxproj.filters
+
+# Игнорирование системных файлов
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
