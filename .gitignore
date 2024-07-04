@@ -1,49 +1,90 @@
-# Бинарные файлы
+#############################
+## Java
+##############################
+.mtj.tmp/
 *.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
 
-# Локальные настройки
-.settings/
-.idea/
-
-# Временные файлы
-*.tmp
-*.swp
-*.bak
-
-# Игнорирование папки .m2, которая содержит Maven репозиторий
-.m2/
-
-# Игнорирование папки .gradle, которая содержит Gradle репозиторий
-.gradle/
-
-# Игнорирование папки target, которая используется Maven или Gradle для хранения артефактов сборки
+##############################
+## Maven
+##############################
 target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
-# Игнорирование выходных файлов IDE
-out/
+##############################
+## Gradle
+##############################
+bin/
 build/
-dist/
+.gradle
+.gradletasknamecache
+gradle-app.setting
+!gradle-wrapper.jar
 
-# Игнорирование IDE
-target/
-.vscode/
-.vscode
-lab2/target
-lab2/.vscode
+##############################
+## IntelliJ
+##############################
+out/
+.idea/
+.idea_modules/
 *.iml
 *.ipr
 *.iws
-*.vcxproj
-*.vcpkg.cmake
-*.vcxproj.filters
 
-# Игнорирование системных файлов
+##############################
+## Eclipse
+##############################
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
+
+##############################
+## NetBeans
+##############################
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+##############################
+## Visual Studio Code
+##############################
+.vscode/
+.code-workspace
+
+##############################
+## OS X
+##############################
 .DS_Store
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-lab2/Desktop.ini
-lab2/src/Desktop.ini
-lab2/src/java/Desktop.ini
-lab2/test/Desktop.ini
-lab2/test/java/Desktop.ini
+
+##############################
+## Miscellaneous
+##############################
+*.log
