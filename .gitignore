@@ -27,6 +27,7 @@ dist/
 # Игнорирование IDE
 target/
 .vscode/
+.vscode
 lab2/target
 lab2/.vscode
 *.iml
