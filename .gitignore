@@ -25,7 +25,10 @@ build/
 dist/
 
 # Игнорирование IDE
+target/
 .vscode/
+lab2/target
+lab2/.vscode
 *.iml
 *.ipr
 *.iws
@@ -38,3 +41,8 @@ dist/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+lab2/Desktop.ini
+lab2/src/Desktop.ini
+lab2/src/java/Desktop.ini
+lab2/test/Desktop.ini
+lab2/test/java/Desktop.ini
