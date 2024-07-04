@@ -25,6 +25,18 @@ public class NodeTest {
    }
 
    @Test
+   void toHTMLSpec() {
+      Node root = new Node("root");
+      Node firstChild = root.addChild("1");
+      Node secondChild = root.addChild("2");
+      firstChild.addChild("1.1");
+      firstChild.addChild("1.2");
+      secondChild.addChild("2.1");
+      String s = root.toHTML();
+      String testString = "root<ul><li>1<ul><li>1.1<ul></ul></li><li>1.2<ul></ul></li></ul></li><li>2<ul><li>2.1<ul></ul></li></ul></li></ul>";
+      assertEquals(testString, s);
+   }
+   @Test
    void addChildSpec() {
       Node root = new Node("root");
       Node node1 = root.addChild("node1");

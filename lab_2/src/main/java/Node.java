@@ -7,8 +7,8 @@ public class Node {
    ArrayList<Node> childs = new ArrayList<>();
 
    /**
-    * Конструктор узал дерева
-    * @param name имя узла
+    * РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СѓР·Р°Р» РґРµСЂРµРІР°
+    * @param name РёРјСЏ СѓР·Р»Р°
     */
    public Node(String name) {
       this.name = name;
@@ -17,8 +17,8 @@ public class Node {
 
    @Override
    /**
-    * Возвращает информацию об узле
-    * @return Строка с названием текущего узла и информацией о его детях
+    * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СѓР·Р»Рµ
+    * @return РЎС‚СЂРѕРєР° СЃ РЅР°Р·РІР°РЅРёРµРј С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р° Рё РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ РµРіРѕ РґРµС‚СЏС…
     */
    public String toString() {
       String childList = name + "\t" + ID.toString() + "\n";
@@ -29,13 +29,12 @@ public class Node {
    }
 
    /**
-    * Возвращает иехархию дерева начиная с текущего узла
-    * @return строку с названием текущего узла и иерархией ВСЕХ его потомков
+    * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРµС…Р°СЂС…РёСЋ РґРµСЂРµРІР° РЅР°С‡РёРЅР°СЏ СЃ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р°
+    * @return СЃС‚СЂРѕРєСѓ СЃ РЅР°Р·РІР°РЅРёРµРј С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р° Рё РёРµСЂР°СЂС…РёРµР№ Р’РЎР•РҐ РµРіРѕ РїРѕС‚РѕРјРєРѕРІ
     */
    public String toStringAll() {
       return name + "\n" + toStringAll(1);
    }
-
    private String toStringAll(int step) {
       String allInfo = "";
       for (Node node : childs) {
@@ -47,15 +46,30 @@ public class Node {
    }
 
    /**
-    * Изменение имени узла
-    * @param name новое имя
+    * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРµС…Р°СЂС…РёСЋ РґРµСЂРµРІР° РЅР°С‡РёРЅР°СЏ СЃ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р° РІ РІРёРґРµ РјРЅРѕРіРѕСѓСЂРѕРІРЅРµРІРѕРіРѕ СЃРїРёСЃРєР° HTML
+    * @return СЃС‚СЂРѕРєСѓ СЃ РЅР°Р·РІР°РЅРёРµРј С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р° Рё РёРµСЂР°СЂС…РёРµР№ Р’РЎР•РҐ РµРіРѕ РїРѕС‚РѕРјРєРѕРІ РІ HTML
+    */
+   public String toHTML() {
+      return "root<ul>" + toHTMLRec() + "</ul>";
+   }
+
+   private String toHTMLRec() {
+      String allInfo = "";
+      for (Node node : childs)
+         allInfo += "<li>" + node.name + "<ul>" + node.toHTMLRec() + "</ul></li>";
+      return allInfo;
+   }
+
+   /**
+    * РР·РјРµРЅРµРЅРёРµ РёРјРµРЅРё СѓР·Р»Р°
+    * @param name РЅРѕРІРѕРµ РёРјСЏ
     */
    public void setName(String name) {
       this.name = name;
    }
 
    /**
-    * @return имя узла
+    * @return РёРјСЏ СѓР·Р»Р°
     */
    public String getName() {
       return name;
@@ -63,16 +77,16 @@ public class Node {
 
    /**
     *
-    * @return ID узла
+    * @return ID СѓР·Р»Р°
     */
    public UUID getID() {
       return ID;
    }
 
    /**
-    * Создает новый узел-потомок
-    * @param name имя нового узла
-    * @return Ссылку на новый узел
+    * РЎРѕР·РґР°РµС‚ РЅРѕРІС‹Р№ СѓР·РµР»-РїРѕС‚РѕРјРѕРє
+    * @param name РёРјСЏ РЅРѕРІРѕРіРѕ СѓР·Р»Р°
+    * @return РЎСЃС‹Р»РєСѓ РЅР° РЅРѕРІС‹Р№ СѓР·РµР»
     */
    public Node addChild(String name) {
       Node node = new Node(name);
@@ -81,9 +95,9 @@ public class Node {
    }
 
    /**
-    * Поиск ребенка дерева.
-    * @param name имя искомого узла
-    * @return Ссылку на искомый узел или null, если его не существует
+    * РџРѕРёСЃРє СЂРµР±РµРЅРєР° РґРµСЂРµРІР°.
+    * @param name РёРјСЏ РёСЃРєРѕРјРѕРіРѕ СѓР·Р»Р°
+    * @return РЎСЃС‹Р»РєСѓ РЅР° РёСЃРєРѕРјС‹Р№ СѓР·РµР» РёР»Рё null, РµСЃР»Рё РµРіРѕ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
     */
    public Node getChild(String name) {
       int i = 0;
@@ -95,9 +109,9 @@ public class Node {
    }
 
    /**
-    * Удаление потомка по его имени
-    * @param name - имя потомка
-    * @return true, если удаление произошло
+    * РЈРґР°Р»РµРЅРёРµ РїРѕС‚РѕРјРєР° РїРѕ РµРіРѕ РёРјРµРЅРё
+    * @param name - РёРјСЏ РїРѕС‚РѕРјРєР°
+    * @return true, РµСЃР»Рё СѓРґР°Р»РµРЅРёРµ РїСЂРѕРёР·РѕС€Р»Рѕ
     */
    public boolean deleteChild(String name) {
       int i = 0;
@@ -110,9 +124,9 @@ public class Node {
    }
 
    /**
-    * Удаление потомка по его ID
-    * @param ID потомка
-    * @return true, если удаление произошло
+    * РЈРґР°Р»РµРЅРёРµ РїРѕС‚РѕРјРєР° РїРѕ РµРіРѕ ID
+    * @param ID РїРѕС‚РѕРјРєР°
+    * @return true, РµСЃР»Рё СѓРґР°Р»РµРЅРёРµ РїСЂРѕРёР·РѕС€Р»Рѕ
     */
    public boolean deleteChild(UUID ID) {
       int i = 0;
@@ -125,8 +139,8 @@ public class Node {
    }
 
    /**
-    * Удаляет всех потомков текущего узла
-    * @return true, если удаление произошло
+    * РЈРґР°Р»СЏРµС‚ РІСЃРµС… РїРѕС‚РѕРјРєРѕРІ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р°
+    * @return true, РµСЃР»Рё СѓРґР°Р»РµРЅРёРµ РїСЂРѕРёР·РѕС€Р»Рѕ
     */
    public boolean deleteAllChildren() {
       if (childs.size() <= 0)
@@ -136,8 +150,8 @@ public class Node {
    }
 
    /**
-    * Возвращает количество потомков
-    * @return количество потомков
+    * Р’РѕР·РІСЂР°С‰Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕС‚РѕРјРєРѕРІ
+    * @return РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕС‚РѕРјРєРѕРІ
     */
    public int count() {
       return childs.size();
