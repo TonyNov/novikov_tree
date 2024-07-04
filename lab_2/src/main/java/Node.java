@@ -4,14 +4,22 @@ import java.util.UUID;
 public class Node {
    String name;
    UUID ID;
-   int pole;
-   ArrayList<Node> childs = new ArrayList<Node>();
+   ArrayList<Node> childs = new ArrayList<>();
 
+   /**
+    * Конструктор узал дерева
+    * @param name имя узла
+    */
    public Node(String name) {
       this.name = name;
       this.ID = UUID.randomUUID();
    }
 
+   @Override
+   /**
+    * Возвращает информацию об узле
+    * @return Строка с названием текущего узла и информацией о его детях
+    */
    public String toString() {
       String childList = name + "\t" + ID.toString() + "\n";
       for (Node node : childs) {
@@ -20,6 +28,10 @@ public class Node {
       return childList;
    }
 
+   /**
+    * Возвращает иехархию дерева начиная с текущего узла
+    * @return строку с названием текущего узла и иерархией ВСЕХ его потомков
+    */
    public String toStringAll() {
       return name + "\n" + toStringAll(1);
    }
@@ -34,36 +46,62 @@ public class Node {
       return allInfo;
    }
 
+   /**
+    * Изменение имени узла
+    * @param name новое имя
+    */
    public void setName(String name) {
       this.name = name;
    }
 
+   /**
+    * @return имя узла
+    */
    public String getName() {
       return name;
    }
 
+   /**
+    *
+    * @return ID узла
+    */
    public UUID getID() {
       return ID;
    }
 
+   /**
+    * Создает новый узел-потомок
+    * @param name имя нового узла
+    * @return Ссылку на новый узел
+    */
    public Node addChild(String name) {
       Node node = new Node(name);
       childs.add(node);
       return node;
    }
 
+   /**
+    * Поиск ребенка дерева.
+    * @param name имя искомого узла
+    * @return Ссылку на искомый узел или null, если его не существует
+    */
    public Node getChild(String name) {
       int i = 0;
-      while (i < childs.size() && name != childs.get(i).name)
+      while (i < childs.size() && !name.equals(childs.get(i).name))
          i++;
       if (i < childs.size())
          return childs.get(i);
       return null;
    }
 
+   /**
+    * Удаление потомка по его имени
+    * @param name - имя потомка
+    * @return true, если удаление произошло
+    */
    public boolean deleteChild(String name) {
       int i = 0;
-      while (i < childs.size() && name != childs.get(i).name)
+      while (i < childs.size() && !name.equals(childs.get(i).name))
          i++;
       if (i >= childs.size())
          return false;
@@ -71,6 +109,11 @@ public class Node {
       return true;
    }
 
+   /**
+    * Удаление потомка по его ID
+    * @param ID потомка
+    * @return true, если удаление произошло
+    */
    public boolean deleteChild(UUID ID) {
       int i = 0;
       while (i < childs.size() && ID != childs.get(i).ID)
@@ -81,14 +124,22 @@ public class Node {
       return true;
    }
 
-   public boolean deleteAllChilds() {
+   /**
+    * Удаляет всех потомков текущего узла
+    * @return true, если удаление произошло
+    */
+   public boolean deleteAllChildren() {
       if (childs.size() <= 0)
          return false;
       childs.clear();
       return true;
    }
 
-   public int childCount() {
+   /**
+    * Возвращает количество потомков
+    * @return количество потомков
+    */
+   public int count() {
       return childs.size();
    }
 }
