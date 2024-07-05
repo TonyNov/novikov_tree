@@ -1,12 +1,18 @@
 package ru.summer2024.novikov;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Node {
-   String name;
-   UUID id;
-   ArrayList<Node> children = new ArrayList<>();
+   private String name;
+   private UUID id;
+   private ArrayList<Node> children = new ArrayList<>();
 
    /**
     * Конструктор узла дерева
@@ -48,7 +54,8 @@ public class Node {
    public String toStringAll() {
       return name + "\n" + toStringAll(1);
    }
-/**
+
+   /**
     * Возвращает иехархию потомков узла
     * 
     * @return строку с иерархией ВСЕХ потомков узла
@@ -86,6 +93,29 @@ public class Node {
       return allInfo.toString();
    }
 
+   public void toFile() {
+      try (FileWriter writer = new FileWriter("root.json")) {
+         String myJson = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+         writer.write(myJson);
+      } catch (JsonProcessingException e) {
+         e.printStackTrace();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
+
+   public void fromFile() {
+      try {
+         File file = new File("root.json");
+         Node node = new ObjectMapper().readValue(file, Node.class);
+         this.setChildren(node.getChildren());
+         this.setID(node.getID());
+         this.setName(node.getName());
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+   }
+
    /**
     * Изменение имени узла
     * 
@@ -117,7 +147,7 @@ public class Node {
     *
     * @return ID узла
     */
-   public UUID getId() {
+   public UUID getID() {
       return id;
    }
 
