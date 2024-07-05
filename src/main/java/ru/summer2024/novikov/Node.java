@@ -4,15 +4,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Node {
    private String name;
    private UUID id;
-   private ArrayList<Node> children = new ArrayList<>();
+   private ArrayList<Node> children=new ArrayList<>();
 
    /**
     * Конструктор узла дерева
@@ -93,26 +93,26 @@ public class Node {
       return allInfo.toString();
    }
 
-   public void toFile() {
+   public boolean toFile() {
       try (FileWriter writer = new FileWriter("root.json")) {
          String myJson = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
          writer.write(myJson);
-      } catch (JsonProcessingException e) {
-         e.printStackTrace();
+         return true;
       } catch (IOException e) {
-         e.printStackTrace();
+         return false;
       }
    }
 
-   public void fromFile() {
+   public boolean fromFile() {
       try {
          File file = new File("root.json");
          Node node = new ObjectMapper().readValue(file, Node.class);
-         this.setChildren(node.getChildren());
+         this.setChildren((ArrayList<Node>)node.getChildren());
          this.setID(node.getID());
          this.setName(node.getName());
+         return true;
       } catch (IOException e) {
-         e.printStackTrace();
+         return false;
       }
    }
 
@@ -156,7 +156,7 @@ public class Node {
     * 
     * @return ArrayList<Node> - список дочерних элементов
     */
-   public ArrayList<Node> getChildren() {
+   public List<Node> getChildren() {
       return children;
    }
 
