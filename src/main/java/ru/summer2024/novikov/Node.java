@@ -6,7 +6,14 @@ import java.util.UUID;
 public class Node {
    String name;
    UUID id;
-   ArrayList<Node> childs = new ArrayList<>();
+   ArrayList<Node> children = new ArrayList<>();
+
+   /**
+    * Конструктор узла дерева
+    * 
+    */
+   public Node() {
+   }
 
    /**
     * Конструктор узал дерева
@@ -27,7 +34,7 @@ public class Node {
    public String toString() {
       StringBuilder childList = new StringBuilder();
       childList.append(name).append("\t").append(id.toString()).append("\n");
-      for (Node node : childs) {
+      for (Node node : children) {
          childList.append("\t\t").append(node.name).append("\t").append(node.id.toString()).append("\n");
       }
       return childList.toString();
@@ -41,13 +48,17 @@ public class Node {
    public String toStringAll() {
       return name + "\n" + toStringAll(1);
    }
-
+/**
+    * Возвращает иехархию потомков узла
+    * 
+    * @return строку с иерархией ВСЕХ потомков узла
+    */
    private String toStringAll(int step) {
       StringBuilder allInfo = new StringBuilder();
       StringBuilder tempString = new StringBuilder();
       for (int i = 0; i < step; i++)
          tempString.append("\t");
-      for (Node node : childs) {
+      for (Node node : children) {
          allInfo.append(tempString).append(node.name).append("\n").append(node.toStringAll(step + 1));
       }
       return allInfo.toString();
@@ -63,9 +74,14 @@ public class Node {
       return "root<ul>" + toHTMLRec() + "</ul>";
    }
 
+   /**
+    * Возвращает иехархию потомков узла в виде многоуровневого списка HTML
+    * 
+    * @return строку с иерархией ВСЕХ потомков узла в HTML
+    */
    private String toHTMLRec() {
-      StringBuilder allInfo=new StringBuilder();
-      for (Node node : childs)
+      StringBuilder allInfo = new StringBuilder();
+      for (Node node : children)
          allInfo.append("<li>").append(node.name).append("<ul>").append(node.toHTMLRec()).append("</ul></li>");
       return allInfo.toString();
    }
@@ -80,10 +96,21 @@ public class Node {
    }
 
    /**
+    * Возвращает имя узла
+    * 
     * @return имя узла
     */
    public String getName() {
       return name;
+   }
+
+   /**
+    * Изменение id узла
+    * 
+    * @param id
+    */
+   private void setID(UUID id) {
+      this.id = id;
    }
 
    /**
@@ -95,6 +122,25 @@ public class Node {
    }
 
    /**
+    * Возвращает список дочерних элементов
+    * 
+    * @return ArrayList<Node> - список дочерних элементов
+    */
+   public ArrayList<Node> getChildren() {
+      return children;
+   }
+
+   /**
+    * Изменение списка потомков. Используется для загрузки в файл и выгрузки из
+    * файла
+    * 
+    * @param list новый список дочерних элементов
+    */
+   private void setChildren(ArrayList<Node> list) {
+      this.children = list;
+   }
+
+   /**
     * Создает новый узел-потомок
     * 
     * @param name имя нового узла
@@ -102,7 +148,7 @@ public class Node {
     */
    public Node addChild(String name) {
       Node node = new Node(name);
-      childs.add(node);
+      children.add(node);
       return node;
    }
 
@@ -113,11 +159,9 @@ public class Node {
     * @return Ссылку на искомый узел или null, если его не существует
     */
    public Node getChild(String name) {
-      int i = 0;
-      while (i < childs.size() && !name.equals(childs.get(i).name))
-         i++;
-      if (i < childs.size())
-         return childs.get(i);
+      for (int i = 0; i < children.size(); i++)
+         if (name.equals(children.get(i).name))
+            return children.get(i);
       return null;
    }
 
@@ -128,13 +172,13 @@ public class Node {
     * @return true, если удаление произошло
     */
    public boolean deleteChild(String name) {
-      int i = 0;
-      while (i < childs.size() && !name.equals(childs.get(i).name))
-         i++;
-      if (i >= childs.size())
-         return false;
-      childs.remove(i);
-      return true;
+      for (int i = 0; i < children.size(); i++) {
+         if (name.equals(children.get(i).name)) {
+            children.remove(i);
+            return true;
+         }
+      }
+      return false;
    }
 
    /**
@@ -144,13 +188,13 @@ public class Node {
     * @return true, если удаление произошло
     */
    public boolean deleteChild(UUID id) {
-      int i = 0;
-      while (i < childs.size() && id != childs.get(i).id)
-         i++;
-      if (i >= childs.size())
-         return false;
-      childs.remove(i);
-      return true;
+      for (int i = 0; i < children.size(); i++) {
+         if (id.equals(children.get(i).id)) {
+            children.remove(i);
+            return true;
+         }
+      }
+      return false;
    }
 
    /**
@@ -159,9 +203,9 @@ public class Node {
     * @return true, если удаление произошло
     */
    public boolean deleteAllChildren() {
-      if (childs.isEmpty())
+      if (children.isEmpty())
          return false;
-      childs.clear();
+      children.clear();
       return true;
    }
 
@@ -171,6 +215,6 @@ public class Node {
     * @return количество потомков
     */
    public int count() {
-      return childs.size();
+      return children.size();
    }
 }
