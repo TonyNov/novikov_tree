@@ -1,52 +1,62 @@
+package ru.summer2024.novikov;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class Node {
    String name;
-   UUID ID;
+   UUID id;
    ArrayList<Node> childs = new ArrayList<>();
 
    /**
     * Конструктор узал дерева
+    * 
     * @param name имя узла
     */
    public Node(String name) {
       this.name = name;
-      this.ID = UUID.randomUUID();
+      this.id = UUID.randomUUID();
    }
 
    @Override
    /**
     * Возвращает информацию об узле
+    * 
     * @return Строка с названием текущего узла и информацией о его детях
     */
    public String toString() {
-      String childList = name + "\t" + ID.toString() + "\n";
+      StringBuilder childList = new StringBuilder();
+      childList.append(name).append("\t").append(id.toString()).append("\n");
       for (Node node : childs) {
-         childList += "\t\t" + node.name + "\t" + node.ID.toString() + "\n";
+         childList.append("\t\t").append(node.name).append("\t").append(node.id.toString()).append("\n");
       }
-      return childList;
+      return childList.toString();
    }
 
    /**
     * Возвращает иехархию дерева начиная с текущего узла
+    * 
     * @return строку с названием текущего узла и иерархией ВСЕХ его потомков
     */
    public String toStringAll() {
       return name + "\n" + toStringAll(1);
    }
+
    private String toStringAll(int step) {
-      String allInfo = "";
+      StringBuilder allInfo = new StringBuilder();
+      StringBuilder tempString = new StringBuilder();
+      for (int i = 0; i < step; i++)
+         tempString.append("\t");
       for (Node node : childs) {
-         for (int i = 0; i < step; i++)
-            allInfo += '\t';
-         allInfo += node.name + "\n" + node.toStringAll(step + 1);
+         allInfo.append(tempString).append(node.name).append("\n").append(node.toStringAll(step + 1));
       }
-      return allInfo;
+      return allInfo.toString();
    }
 
    /**
-    * Возвращает иехархию дерева начиная с текущего узла в виде многоуровневого списка HTML
+    * Возвращает иехархию дерева начиная с текущего узла в виде многоуровневого
+    * списка HTML
+    * 
     * @return строку с названием текущего узла и иерархией ВСЕХ его потомков в HTML
     */
    public String toHTML() {
@@ -54,14 +64,15 @@ public class Node {
    }
 
    private String toHTMLRec() {
-      String allInfo = "";
+      StringBuilder allInfo=new StringBuilder();
       for (Node node : childs)
-         allInfo += "<li>" + node.name + "<ul>" + node.toHTMLRec() + "</ul></li>";
-      return allInfo;
+         allInfo.append("<li>").append(node.name).append("<ul>").append(node.toHTMLRec()).append("</ul></li>");
+      return allInfo.toString();
    }
 
    /**
     * Изменение имени узла
+    * 
     * @param name новое имя
     */
    public void setName(String name) {
@@ -79,12 +90,13 @@ public class Node {
     *
     * @return ID узла
     */
-   public UUID getID() {
-      return ID;
+   public UUID getId() {
+      return id;
    }
 
    /**
     * Создает новый узел-потомок
+    * 
     * @param name имя нового узла
     * @return Ссылку на новый узел
     */
@@ -96,6 +108,7 @@ public class Node {
 
    /**
     * Поиск ребенка дерева.
+    * 
     * @param name имя искомого узла
     * @return Ссылку на искомый узел или null, если его не существует
     */
@@ -110,6 +123,7 @@ public class Node {
 
    /**
     * Удаление потомка по его имени
+    * 
     * @param name - имя потомка
     * @return true, если удаление произошло
     */
@@ -125,12 +139,13 @@ public class Node {
 
    /**
     * Удаление потомка по его ID
-    * @param ID потомка
+    * 
+    * @param id потомка
     * @return true, если удаление произошло
     */
-   public boolean deleteChild(UUID ID) {
+   public boolean deleteChild(UUID id) {
       int i = 0;
-      while (i < childs.size() && ID != childs.get(i).ID)
+      while (i < childs.size() && id != childs.get(i).id)
          i++;
       if (i >= childs.size())
          return false;
@@ -140,10 +155,11 @@ public class Node {
 
    /**
     * Удаляет всех потомков текущего узла
+    * 
     * @return true, если удаление произошло
     */
    public boolean deleteAllChildren() {
-      if (childs.size() <= 0)
+      if (childs.isEmpty())
          return false;
       childs.clear();
       return true;
@@ -151,6 +167,7 @@ public class Node {
 
    /**
     * Возвращает количество потомков
+    * 
     * @return количество потомков
     */
    public int count() {

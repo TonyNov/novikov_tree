@@ -1,9 +1,11 @@
+package ru.summer2024.novikov;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 
-public class NodeTest {
+class NodeTest {
 
    @Test
    void createTreeSpec() {
@@ -89,11 +91,11 @@ public class NodeTest {
       Node node2 = root.addChild("node2");
       assertNotNull(node1);
       assertNotNull(node2);
-      root.deleteChild(node1.getID());
+      root.deleteChild(node1.getId());
       assertNull(root.getChild("node1"));
       assertEquals(node2, root.getChild("node2"));
       assertEquals(1, root.count());
-      root.deleteChild(node2.getID());
+      root.deleteChild(node2.getId());
       assertNull(root.getChild("node1"));
       assertNull(root.getChild("node2"));
       assertEquals(0, root.count());
