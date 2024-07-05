@@ -18,8 +18,10 @@ public class Node {
     * Конструктор узла дерева
     * 
     */
-   public Node() {
-   }
+    public Node() {
+      this.name="namelessNode"; 
+      this.id=UUID.randomUUID();
+   } 
 
    /**
     * Конструктор узал дерева
