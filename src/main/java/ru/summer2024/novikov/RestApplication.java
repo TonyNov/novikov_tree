@@ -1,7 +1,10 @@
 package ru.summer2024.novikov;
 
 import javax.ws.rs.core.Application;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -9,6 +12,7 @@ import java.util.Set;
  */
 public class RestApplication extends Application {
     private Node root = new Node("root");
+    private List<String> list = new ArrayList<>();
 
     public RestApplication() {
         Node firstChild = root.addChild("1");
@@ -16,6 +20,10 @@ public class RestApplication extends Application {
         firstChild.addChild("1.1");
         firstChild.addChild("1.2");
         secondChild.addChild("2.1");
+        list.add("aaa");
+        list.add("bbb");
+        list.add("ccc");
+        list.add("ddd");
     }
 
     /**
@@ -26,6 +34,7 @@ public class RestApplication extends Application {
     @Override
     public Set<Object> getSingletons() {
         Set<Object> resources = new HashSet<>();
+        resources.add(new ListPresentationController(list));
         resources.add(new TreePresentationController(root));
         resources.add(new LoginController());
         return resources;
