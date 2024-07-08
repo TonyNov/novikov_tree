@@ -40,7 +40,7 @@ class NodeTest {
    }
 
    @Test
-   void toFile() {
+   void fileSpec() {
       Node root = new Node("root");
       Node firstChild = root.addChild("1");
       Node secondChild = root.addChild("2");
