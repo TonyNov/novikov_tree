@@ -1,4 +1,4 @@
-package ru.uniyar.krista.industrial.soft.dev.web;
+package ru.summer2024.novikov;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Контроллер отвечающий за представление списка.
  */
-@Path("/")
+@Path("/list")
 public class ListPresentationController {
     private final List<String> list;
 

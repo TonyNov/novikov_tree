@@ -1,4 +1,4 @@
-package ru.uniyar.krista.industrial.soft.dev.web;
+package ru.summer2024.novikov;
 
 import java.sql.*;
 
