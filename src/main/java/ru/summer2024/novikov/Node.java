@@ -12,16 +12,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Node {
    private String name;
    private UUID id;
-   private ArrayList<Node> children=new ArrayList<>();
+   private ArrayList<Node> children = new ArrayList<>();
 
    /**
     * Конструктор узла дерева
     * 
     */
-    public Node() {
-      this.name="namelessNode"; 
-      this.id=UUID.randomUUID();
-   } 
+   public Node() {
+      this.name = "namelessNode";
+      this.id = UUID.randomUUID();
+   }
 
    /**
     * Конструктор узал дерева
@@ -80,7 +80,7 @@ public class Node {
     * @return строку с названием текущего узла и иерархией ВСЕХ его потомков в HTML
     */
    public String toHTML() {
-      return "root<ul>" + toHTMLRec() + "</ul>";
+      return getName() + "<ul>" + toHTMLRec() + "</ul>";
    }
 
    /**
@@ -109,7 +109,7 @@ public class Node {
       try {
          File file = new File("root.json");
          Node node = new ObjectMapper().readValue(file, Node.class);
-         this.setChildren((ArrayList<Node>)node.getChildren());
+         this.setChildren((ArrayList<Node>) node.getChildren());
          this.setID(node.getID());
          this.setName(node.getName());
          return true;
@@ -193,6 +193,19 @@ public class Node {
    public Node getChild(String name) {
       for (int i = 0; i < children.size(); i++)
          if (name.equals(children.get(i).name))
+            return children.get(i);
+      return null;
+   }
+
+   /**
+    * Поиск ребенка дерева.
+    * 
+    * @param itemID ID искомого узла
+    * @return Ссылку на искомый узел или null, если его не существует
+    */
+   public Node getChild(UUID itemID) {
+      for (int i = 0; i < children.size(); i++)
+         if (itemID.equals(children.get(i).id))
             return children.get(i);
       return null;
    }
