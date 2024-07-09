@@ -48,7 +48,7 @@ public class TreePresentationController {
     private String toHTMLRec(Node node, String parentID) {
         StringBuilder allInfo = new StringBuilder();
         for (Node node1 : node.getChildren())
-            allInfo.append("<li>").append(node1.getName()).append("  "+parentID + ":" + node1.getID().toString()+"  ")
+            allInfo.append("<li>").append(node1.getName())
                     .append(" <a href=\"edit/" + parentID + ":" + node1.getID().toString()
                             + "\">Редактировать</a>   <a href=\"add/" + parentID + ":" + node1.getID().toString()
                             + "\">Добавить дочерний элемент</a>    <a href=\"del/" + parentID + ":"
