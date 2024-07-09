@@ -48,7 +48,7 @@ public class TreePresentationController {
     private String toHTMLRec(Node node, String parentID) {
         StringBuilder allInfo = new StringBuilder();
         for (Node node1 : node.getChildren())
-            allInfo.append("<li>").append(node1.getName())
+            allInfo.append("<li>").append(node1.getName()).append("  "+parentID + ":" + node1.getID().toString()+"  ")
                     .append(" <a href=\"edit/" + parentID + ":" + node1.getID().toString()
                             + "\">Редактировать</a>   <a href=\"add/" + parentID + ":" + node1.getID().toString()
                             + "\">Добавить дочерний элемент</a>    <a href=\"del/" + parentID + ":"
@@ -112,6 +112,28 @@ public class TreePresentationController {
     }
 
     /**
+     * Редактирует элемент списка на основе полученных данных.
+     *
+     * @param itemId индекс элемента списка.
+     * @return перенаправление на основную страницу со списком.
+     */
+    @POST
+    @Path("/edit/{id}")
+    @Produces("text/html")
+    public Response editItem(@PathParam("id") String itemId, @FormParam("value") String itemValue) {
+        var id = itemId.split(":");
+        Node node = root;
+        for (int i = 1; i < id.length; i++)
+            node = node.getChild(UUID.fromString(id[i]));
+        node.setName(itemValue);
+        try {
+            return Response.seeOther(new URI("/")).build();
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Ошибка построения URL для перенаправления");
+        }
+    }
+
+    /**
      * Выводит страничку для добавления дочернего элемента.
      *
      * @param itemId индекс элемента списка.
@@ -142,6 +164,28 @@ public class TreePresentationController {
     }
 
     /**
+     * Добавляет дочерний элемент на основе полученных данных
+     *
+     * @param itemId индекс элемента списка.
+     * @return перенаправление на основную страницу со списком.
+     */
+    @POST
+    @Path("/add/{id}")
+    @Produces("text/html")
+    public Response addItem(@PathParam("id") String itemId, @FormParam("value") String itemValue) {
+        var id = itemId.split(":");
+        Node node = root;
+        for (int i = 1; i < id.length; i++)
+            node = node.getChild(UUID.fromString(id[i]));
+        node.addChild(itemValue);
+        try {
+            return Response.seeOther(new URI("/")).build();
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Ошибка построения URI для перенаправления");
+        }
+    }
+
+    /**
      * Выводит страничку для добавления дочернего элемента.
      *
      * @param itemId индекс элемента списка.
@@ -167,50 +211,6 @@ public class TreePresentationController {
     }
 
     /**
-     * Редактирует элемент списка на основе полученных данных.
-     *
-     * @param itemId индекс элемента списка.
-     * @return перенаправление на основную страницу со списком.
-     */
-    @POST
-    @Path("/edit/{id}")
-    @Produces("text/html")
-    public Response editItem(@PathParam("id") String itemId, @FormParam("value") String itemValue) {
-        var id = itemId.split(":");
-        Node node = root;
-        for (int i = 1; i < id.length; i++)
-            node = node.getChild(UUID.fromString(id[i]));
-        node.setName(itemValue);
-        try {
-            return Response.seeOther(new URI("/")).build();
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException("Ошибка построения URL для перенаправления");
-        }
-    }
-
-    /**
-     * Добавляет дочерний элемент на основе полученных данных
-     *
-     * @param itemId индекс элемента списка.
-     * @return перенаправление на основную страницу со списком.
-     */
-    @POST
-    @Path("/add/{id}")
-    @Produces("text/html")
-    public Response addItem(@PathParam("id") String itemId, @FormParam("value") String itemValue) {
-        var id = itemId.split(":");
-        Node node = root;
-        for (int i = 1; i < id.length; i++)
-            node = node.getChild(UUID.fromString(id[i]));
-        node.addChild(itemValue);
-        try {
-            return Response.seeOther(new URI("/")).build();
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException("Ошибка построения URI для перенаправления");
-        }
-    }
-
-    /**
      * Удаляет элемент
      *
      * @param itemId индекс элемента.
@@ -223,7 +223,7 @@ public class TreePresentationController {
         var id = itemId.split(":");
         Node node = root;
         int i;
-        for (i = 1; i < id.length - 2; i++)
+        for (i = 1; i < id.length - 1; i++)
             node = node.getChild(UUID.fromString(id[i]));
         node.deleteChild(UUID.fromString(id[id.length - 1]));
         try {
