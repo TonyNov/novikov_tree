@@ -36,7 +36,7 @@ public class TreePresentationController {
     public String toHTML(Node node) {
         return node.getName() + " <a href=\"edit/" + node.getID().toString()
                 + "\">Редактировать</a>   <a href=\"add/" + node.getID().toString()
-                + "\">Добавить дочерний элемент</a>"
+                + "\">Добавить дочерний элемент</a>  <a href=\"test/\">TestFunction</a>"
                 + "<ul>" + toHTMLRec(node, node.getID().toString()) + "</ul>";
     }
 
@@ -58,7 +58,36 @@ public class TreePresentationController {
                     .append("</ul></li>");
         return allInfo.toString();
     }
-
+    @GET
+    @Path("/test/")
+    @Produces("text/html")
+    public String getTestFunction() {
+        String result = "<html>" +
+                " <head>" +
+                " <title>TestFunction</title>" +
+                " </head>" +
+                " <body>" +
+                " <h1>TestFunction</h1>";
+        result += " <form method=\"post\" action=\"/test/\">" +
+                " <input type=\"submit\"/>";
+        result += " </form>" +
+                " </body>" +
+                "</html>";
+        return result;
+    }
+    @POST
+    @Path("/test/")
+    @Produces("text/html")
+    public Response postTestFunction() {
+        int i=-2000000000;
+        while(i<2000000000){
+            i+=1;i-=1;}
+        try {
+            return Response.seeOther(new URI("/")).build();
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Ошибка построения URL для перенаправления");
+        }
+    }
     /**
      * Выводит HTML-страницу со списком, ссылками на страницы редактирования и
      * копкой добавления записи.
